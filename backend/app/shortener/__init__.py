@@ -1,1 +1,1 @@
-from .shortener import shorten_url
+from .shortener import generate_code

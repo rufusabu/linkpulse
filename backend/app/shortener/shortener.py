@@ -1,8 +1,16 @@
-import base64
+import secrets
+import string
 
-def shorten_url(url: str):
-    url_bytes = url.encode("utf-8")
-    b64_bytes = base64.b64encode(url_bytes)
-    b64_string = b64_bytes.decode("utf-8")
+# Base-62 alphabet: a-z A-Z 0-9
+_ALPHABET = string.ascii_letters + string.digits
+_CODE_LENGTH = 7
 
-    return b64_string
+
+def generate_code(length: int = _CODE_LENGTH) -> str:
+    """Return a cryptographically random base-62 short code.
+
+    With length=7 and a 62-char alphabet this gives 62^7 ≈ 3.5 trillion
+    possible codes — collision probability is negligible even at millions
+    of URLs.
+    """
+    return "".join(secrets.choice(_ALPHABET) for _ in range(length))
