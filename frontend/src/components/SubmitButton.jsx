@@ -1,14 +1,15 @@
-import React from "react";
 import styles from "./SubmitButton.module.css";
 
-function SubmitButton() {
+export default function SubmitButton({ loading, disabled }) {
   return (
-    <div className={styles.wrapper}>
-      <button type="submit" className={styles.button}>
-        Shorten
-      </button>
-    </div>
+    <button
+      type="submit"
+      className={styles.button}
+      disabled={disabled}
+      aria-busy={loading}
+    >
+      {loading ? <span className={styles.spinner} aria-hidden="true" /> : null}
+      {loading ? "Shortening…" : "Shorten"}
+    </button>
   );
 }
-
-export default SubmitButton;

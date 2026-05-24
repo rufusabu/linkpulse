@@ -74,7 +74,7 @@ async def shorten(body: ShortenRequest, db: AsyncSession = Depends(get_db)):
         return ShortenResponse(
             status="ok",
             code=existing.code,
-            shortened_url=f"linkpul.se/{existing.code}",
+            shortened_url=f"linkpul.se/r/{existing.code}",
             original_url=existing.original_url,
         )
 
@@ -95,12 +95,12 @@ async def shorten(body: ShortenRequest, db: AsyncSession = Depends(get_db)):
     return ShortenResponse(
         status="ok",
         code=url_row.code,
-        shortened_url=f"linkpul.se/{url_row.code}",
+        shortened_url=f"linkpul.se/r/{url_row.code}",
         original_url=url_row.original_url,
     )
 
 
-@app.get("/{code}")
+@app.get("/r/{code}")
 async def redirect(code: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Url).where(Url.code == code))
     url_row = result.scalar_one_or_none()
